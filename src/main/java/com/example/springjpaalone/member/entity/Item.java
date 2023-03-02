@@ -1,5 +1,6 @@
 package com.example.springjpaalone.member.entity;
 
+import com.example.springjpaalone.member.exception.NotEnoughException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,5 +30,16 @@ public abstract class Item {
 
     // == 비즈니스 로직 추가? ==//
 
+    public void addStock(int stockQuantity) {
+        this.stockQuantity += stockQuantity;
+    }
+
+    public void removeStock(int stockQuantity) {
+        int restStock = this.stockQuantity - stockQuantity;
+        if (restStock < 0) {
+            throw new NotEnoughException("need more stock");
+        }
+        this.stockQuantity = restStock;
+    }
 
 }
